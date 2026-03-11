@@ -211,3 +211,12 @@ __marimo__/
 
 # scraped data files (generated during scraping, should not be in the repo)
 data/*.csv
+
+# ignore raw data
+data/*.csv
+
+# ignore cache
+__pycache__/
+
+# ignore vscode settings
+.vscode/
