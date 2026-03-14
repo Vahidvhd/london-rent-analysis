@@ -82,7 +82,7 @@ def fetch_page(url):
         driver.quit()
 
 
-def main():
+def run_scraper():
     all_data = []
 
     for area_name, area_path in AREAS.items():
