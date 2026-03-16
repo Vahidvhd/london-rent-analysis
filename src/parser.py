@@ -30,7 +30,7 @@ def extract_properties_data(prop, area):
             price = int(match.group(1).replace(",", ""))
 
     if "studio" in text.lower():
-        beds = "studio"
+        beds = 0
     else:
         match = re.search(r"(\d+)\s*beds?", text, re.IGNORECASE)
         if match:
