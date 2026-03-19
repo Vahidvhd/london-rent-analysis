@@ -11,7 +11,6 @@ def build_summary():
     df = pd.read_csv("data/raw_data.csv")
 
     df = df.dropna(subset=["area", "rent", "beds"])
-    df["beds"] = df["beds"].replace("studio", 0)
     df["beds"] = df["beds"].astype(int)
     df = df[df["beds"] <= 4]
 
