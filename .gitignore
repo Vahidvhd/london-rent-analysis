@@ -209,14 +209,6 @@ __marimo__/
 # macOS system files
 .DS_Store
 
-# scraped data files (generated during scraping, should not be in the repo)
+# Generated project files
 data/*.csv
-
-# ignore raw data
-data/*.csv
-
-# ignore cache
-__pycache__/
-
-# ignore vscode settings
-.vscode/
+output/
