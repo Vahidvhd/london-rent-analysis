@@ -77,7 +77,8 @@ def save_bedroom_report_pdf(summary):
                     color="black"
                 )
 
-            ax.set_title(f"{bed}-Bed Average Rent by Area")
+            bed_label = "Studio" if bed == 0 else f"{bed}-Bed"
+            ax.set_title(f"{bed_label} Average Rent by Area")
             ax.set_xlabel("Average Rent (£)")
             ax.set_ylabel("")
 
