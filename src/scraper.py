@@ -11,32 +11,29 @@ from src.parser import count_properties, get_properties, extract_properties_data
 
 BASE_URL = "https://www.openrent.co.uk/properties-to-rent"
 
+
 AREAS = {
     "Camden": "camden",
+    "Hackney": "hackney",
+    # "Islington": "islington",
+    # "Westminster": "westminster",
+    # "Kensington and Chelsea": "kensington-and-chelsea",
+    # "Hammersmith and Fulham": "hammersmith-and-fulham",
+    # # "Southwark": "southwark",
+    # # "Tower Hamlets": "tower-hamlets",
+    # # "Greenwich": "greenwich",
+    # # "Ealing": "ealing",
+    # # "Wandsworth": "wandsworth",
+    # # "Haringey": "haringey",
+    # # "Brent": "brent",
+    # # "Barnet": "barnet",
+    # # "Lewisham": "lewisham",
+    # # "Merton": "merton",
+    # # "Newham": "newham",
+    # # "Lambeth": "lambeth",
+    # # "Redbridge": "redbridge",
+    # # "Bromley": "bromley"
 }
-
-# AREAS = {
-#     "Camden": "camden",
-#     "Hackney": "hackney",
-#     "Islington": "islington",
-#     "Westminster": "westminster",
-#     "Kensington and Chelsea": "kensington-and-chelsea",
-#     "Hammersmith and Fulham": "hammersmith-and-fulham",
-#     "Southwark": "southwark",
-#     "Tower Hamlets": "tower-hamlets",
-#     "Greenwich": "greenwich",
-#     "Ealing": "ealing",
-#     "Wandsworth": "wandsworth",
-#     "Haringey": "haringey",
-#     "Brent": "brent",
-#     "Barnet": "barnet",
-#     "Lewisham": "lewisham",
-#     "Merton": "merton",
-#     "Newham": "newham",
-#     "Lambeth": "lambeth",
-#     "Redbridge": "redbridge",
-#     "Bromley": "bromley"
-# }
 
 
 def fetch_page(url):
@@ -57,7 +54,7 @@ def fetch_page(url):
         previous_count = 0
         same_count_rounds = 0
 
-        for i in range(15):
+        for i in range(5):
             cards = driver.find_elements("css selector", "a.pli.search-property-card")
             current_count = len(cards)
 
@@ -88,18 +85,22 @@ def run_scraper():
     for area_name, area_path in AREAS.items():
         url = f"{BASE_URL}/{area_path}"
 
-        html = fetch_page(url)
+        try:
+            html = fetch_page(url)
 
-        count = count_properties(html)
-        print(f"{area_name}: {count} properties")
+            count = count_properties(html)
+            print(f"{area_name}: {count} properties")
 
-        properties = get_properties(html)
+            properties = get_properties(html)
 
-        for prop in properties:
-            data = extract_properties_data(prop, area_name)
+            for prop in properties:
+                data = extract_properties_data(prop, area_name)
 
-            if data is not None and data["rent"] is not None and data["beds"] is not None:
-                all_data.append(data)
+                if data is not None and data["rent"] is not None and data["beds"] is not None:
+                    all_data.append(data)
+
+        except Exception as e:
+            print(f"failed to scrape {area_name}: {e}")
 
     with open("data/raw_data.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
